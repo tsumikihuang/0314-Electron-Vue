@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+</head>
+
+<body>
+  <div id="test_app">
+    App Name : {{application.name}}<br />
+    version : {{application.version}}<br />
+    description : {{application.description}}<br />
+    
+    <!--v-model是雙向連結，將與vue物件做連結-->
+    title:<input type="text" id="title" v-model="item.title"><br />
+    url:<input type="text" id="url" v-model="item.url"><br />
+    desc:<input type="text" id="desc" v-model="item.desc"><br />
+    <button id="btnADD" v-on:click="add();">ADD</button>
+    <ul>
+      <li v-for="item in application.bookmarks">{{item.title}},{{item.url}}<button>555555</button></li>
+      <!--取名為item-->
+    </ul>
+  </div>
+</body>
+
+<script>
+  import Test from './test';
+  import Vue from 'vue/dist/vue.common';//把後面東西引入後，名稱為Vue   //es2016
+  //同
+  //const Vue=require('vue/dist/vue.common');                         //es2015
+  //當作class來使用
+  let aPP = new Vue({   //建立vue物件
+    el: "#test_app",    //和畫面上哪個物件聯繫
+    data: {    //資料長怎樣
+      //"test":"3",//有一欄位名test，內容3
+      application: {
+        name: "bookmarklist",
+        version: "1.0.0",
+        description: "this is a book list",
+        bookmarks: [
+          {
+            title: "asdf",
+            url: "http",
+            desc: "xxx"
+          }
+        ]
+      },
+      item: {
+        title: "", ure: "", desc: "sdf"
+      }
+    },
+    methods: {
+      add: function () {
+        this.application.bookmarks.push({
+          title: this.item.title,
+          url: this.item.url,
+          desc: this.item.desc
+        })
+      }
+    }
+  });
+
+
+
+
+
+</script>
+
+</html>
