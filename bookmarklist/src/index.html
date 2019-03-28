@@ -4,21 +4,41 @@
 <head>
   <meta charset="utf-8">
   <title></title>
+  <link rel="stylesheet" href="../node_modules/bootstrap/dist/css/bootstrap.min.css" />
+  <style>
+    html.body {
+      height: 100%;
+    }
+  </style>
 </head>
 
 <body>
-  <div id="test_app">
+  <div id="test_app" class="container-fluid h-100 ">
     App Name : {{application.name}}<br />
     version : {{application.version}}<br />
     description : {{application.description}}<br />
-    
+
     <!--v-model是雙向連結，將與vue物件做連結-->
-    title:<input type="text" id="title" v-model="item.title"><br />
-    url:<input type="text" id="url" v-model="item.url"><br />
-    desc:<input type="text" id="desc" v-model="item.desc"><br />
-    <button id="btnADD" v-on:click="add();">ADD</button>
+    <div class="row">
+      <span class="col-2">title:</span><input type="text" id="title" v-model="item.title" class="col-9">
+    </div>
+    <div class="row">
+      <span class="col-2">url:</span><input type="text" id="url" v-model="item.url" class="col-9">
+    </div>
+    <div class="row">
+      <span class="col-2">desc:</span><input type="text" id="desc" v-model="item.desc" class="col-9">
+    </div>
+    <div class="row">
+      <button id="btnADD" v-on:click="add();" class="col-11 btn btn-info">ADD</button>
+    </div>
     <ul>
-      <li v-for="item in application.bookmarks">{{item.title}},{{item.url}}<button>555555</button></li>
+      <li v-for="item in application.bookmarks">
+        <div class="jumbotron">
+          <h1>{{item.title}}</h1>
+          <p>{{item.desc}}<a v-bind:href="item.url" target="_blank">GO</a></p> 
+          <p>{{item.desc}}<a href="#" v-on:click="open(item.url);">GO</a></p> <!--同上-->
+        </div>
+        <button>555555</button></li>
       <!--取名為item-->
     </ul>
   </div>
@@ -29,6 +49,20 @@
   import Vue from 'vue/dist/vue.common';//把後面東西引入後，名稱為Vue   //es2016
   //同
   //const Vue=require('vue/dist/vue.common');                         //es2015
+
+  //進階作法
+  const fs=require('fs');//node存取檔案的模組
+  let allBookmarks=[];
+  if(fs.existsSync("bookmarks.json")){
+    allBookmarks =JSON.parse(fs.readFileSync("bookmarks.json"));
+  }
+
+  /*
+  var allBookmarks =JSON.parse(localStorage.getItem("bookmarks1"));   //不知道bookmarks1這個檔案存在哪裡
+  if(!allBookmarks){
+    allBookmarks=[];
+  }*/
+
   //當作class來使用
   let aPP = new Vue({   //建立vue物件
     el: "#test_app",    //和畫面上哪個物件聯繫
@@ -38,25 +72,31 @@
         name: "bookmarklist",
         version: "1.0.0",
         description: "this is a book list",
-        bookmarks: [
+        bookmarks: allBookmarks
+        /*bookmarks: [
           {
             title: "asdf",
-            url: "http",
+            url: "https://taiwan.googleblog.com/2019/03/google.html",
             desc: "xxx"
           }
-        ]
+        ]*/
       },
       item: {
-        title: "", ure: "", desc: "sdf"
+        title: "", url: "", desc: "sdf"
       }
     },
     methods: {
+      open: function(url){
+        window.open(url,"_blank","nodeIntegration=0");
+      },
       add: function () {
         this.application.bookmarks.push({
           title: this.item.title,
           url: this.item.url,
           desc: this.item.desc
         })
+        //localStorage.setItem("bookmarks1",JSON.stringify(this.application.bookmarks));  //類似瀏覽器的cookie
+        fs.writeFileSync("bookmarks.json",JSON.stringify(this.application.bookmarks));
       }
     }
   });
