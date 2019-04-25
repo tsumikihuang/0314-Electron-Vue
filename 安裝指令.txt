@@ -1,0 +1,23 @@
+安裝electron套件	-g在全域變數
+
+>>> npm install electron -g
+
+>>> npm install electron-forge -g
+
+
+//************************
+安裝git
+
+>>> https://git-scm.com/download/win
+
+electron-forge init menuSample		//menuSample-->使用者自定義專案名稱，預設路徑在user/user/menuSample
+
+
+//************************
+若專案換路徑，則須執行
+
+>>> npm install				//自動安裝記錄檔(package.json)中的套件(過去安裝時必須-g，才會被記錄)
+
+執行專案
+
+>>> npm start
