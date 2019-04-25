@@ -1,57 +1,85 @@
-import { app, BrowserWindow } from 'electron';
+//投影片
+//https://docs.google.com/presentation/d/1ypSYnKQsoYFt52nLcg9nrQZ44H7D40p1hSiTZXrI6LI/edit#slide=id.g5027adc6ea_0_96
 
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require('electron-squirrel-startup')) { // eslint-disable-line global-require
+import { app, BrowserWindow, Menu,dialog ,globalShortcut} from 'electron';  
+//增加menu模組
+//dialog模組可以呈現對話框
+//globalShortcut用作讀取快速鍵
+
+if (require('electron-squirrel-startup')) { 
   app.quit();
 }
 
-// Keep a global reference of the window object, if you don't, the window will
-// be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
 
 const createWindow = () => {
-  // Create the browser window.
+
+  let menu=Menu.buildFromTemplate([                    //新增選單
+    {
+      //第一層選單***********************************************************
+      label:"Menu1",
+      submenu:[
+        {
+          label:"SayHello",
+          click:function(){
+            dialog.showMessageBox({message:"Hello"});
+            //alert("hello");
+            //因為index.js屬於main proccess，而alert是屬於render proccess，執行序不同>ERROR
+          }
+        },
+        {
+          label:"Quit",
+          click:function(){
+            app.quit();         //關掉app
+          }
+        }
+      ]
+    },
+    {
+      //第二層選單***********************************************************
+      //使用投影片P10，常用選單ROLE
+      label:"Menu2",
+      submenu:[
+        {role:"zoomin"},
+        {role:"zoomout"},
+        {role:"toggleFullScreen"},
+        {role:"quit"}
+      ]
+    }
+  ]);
+  Menu.setApplicationMenu(menu);                        //取代electron預設選單\
+globalShortcut.register("F11",function(){
+  let full=mainWindow.isFullScreen();
+  mainWindow.setFullScreen(!full);
+})
+
+
+////////////////////////////////////////////////////以下是原生出來的，我不知道是啥
   mainWindow = new BrowserWindow({
     width: 800,
     height: 600,
   });
 
-  // and load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`);
 
-  // Open the DevTools.
   mainWindow.webContents.openDevTools();
 
-  // Emitted when the window is closed.
   mainWindow.on('closed', () => {
-    // Dereference the window object, usually you would store windows
-    // in an array if your app supports multi windows, this is the time
-    // when you should delete the corresponding element.
     mainWindow = null;
   });
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on('ready', createWindow);
 
-// Quit when all windows are closed.
 app.on('window-all-closed', () => {
-  // On OS X it is common for applications and their menu bar
-  // to stay active until the user quits explicitly with Cmd + Q
   if (process.platform !== 'darwin') {
     app.quit();
   }
 });
 
 app.on('activate', () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (mainWindow === null) {
     createWindow();
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
