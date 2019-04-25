@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="node_modules/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="index.css" />
+</head>
+<body>
+    <div id="app" class="container-fluid h-100">
+        <div class="btn-group">
+            <button type="button" class="btn btn-primary" id="btNewFile">New File</button>
+            <button type="button" class="btn btn-primary" id="btOpenFile">Open File</button>
+            <button type="button" class="btn btn-primary" id="btSaveFile">Save File</button>
+        </div>
+        <div class="row h-100">
+            <textarea class="col-6 source" id="source"></textarea>
+            <div class="col-6 result" id="result"></div>
+        </div>
+    </div>
+    <script>
+        require('./index');
+    </script>
+</body>
+
+</html>
