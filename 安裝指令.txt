@@ -26,3 +26,22 @@ electron-forge init menuSample		//menuSample-->使用者自定義專案名稱，預設路徑在u
 執行專案
 
 >>> npm start
+
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+////////////////////////////////////////////////
+
+***安裝yarn 套件
+<node command prompt>
+>>> npm install yarn -g
+
+
+***加上bootstrap jquery
+<vs code>
+
+>>> yarn add bootstrap
+>>> yarn add jquery
+
+
+
+
