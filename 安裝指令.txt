@@ -1,3 +1,7 @@
+執行install.bat
+
+<在node.js command prompt下執行>
+
 安裝electron套件	-g在全域變數
 
 >>> npm install electron -g
@@ -14,6 +18,7 @@ electron-forge init menuSample		//menuSample-->使用者自定義專案名稱，預設路徑在u
 
 
 //************************
+<在visual studio code 開啟terminal執行>
 若專案換路徑，則須執行
 
 >>> npm install				//自動安裝記錄檔(package.json)中的套件(過去安裝時必須-g，才會被記錄)
