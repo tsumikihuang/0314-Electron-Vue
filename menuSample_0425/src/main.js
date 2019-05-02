@@ -21,10 +21,20 @@ const createWindow = () => {
       submenu:[
         {
           label:"SayHello",
-          click:function(){
+          click:function(item,win){//item是sayhello的按鈕，win是那個殼
+            
+            ///////////////////////////////////////////////////////////////////////////////
+            /////////////////////////////////////////////////////////////////////////////// 1
+            ///////////////////////////////////////////////////////////////////////////////
+            //event1是事件名稱，對應到index接收
+            win.webContents.send("event1","123456");//傳給index(js)，也是IPC的動作
+
+            console.log("sayHello");//出現在terminal中
+            /*
             dialog.showMessageBox({message:"Hello"});
             //alert("hello");
             //因為index.js屬於main proccess，而alert是屬於render proccess，執行序不同>ERROR
+            */
           }
         },
         {
@@ -82,4 +92,16 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+function openFile(){
+  //dialog開檔存檔一般對話窗，只能在main執行
+  dialog.showMessageBox(null,{  //第一個參數是視窗物件，null表示不給，就是主視窗
+    message:"Hi!"
+  });
+}
+
+//從renderer(index.js) call這funciton，所以要把這export出去
+module.exports={openFile};
+
+
 
