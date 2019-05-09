@@ -1,0 +1,9 @@
+1. 下載ACE，取得裡面的 src-min-noconflict資料夾拉出來，重新命名為ace
+
+2. 在node cmd 執行 electron-forge init code-editor-example
+
+3. 將 ace 放到專案-> src ->lib(自己新增)資料夾內
+
+4. 在vs code terminal 執行 yarn add jquery
+
+5. 

@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title></title>
+
+  <style type="text/css" media="screen">
+    #abc {
+      position: absolute;
+      left: 0px;
+      right: 0px;
+      top: 0px;
+      bottom: 0px;
+
+      /*沒有參考點，所以會失敗
+      width: 100%;
+      height: 100%;
+      */
+    }
+  </style>
+</head>
+
+<body>
+
+  <div id="abc">
+    var a;
+  </div>
+
+  <script src="lib/ace/ace.js"></script>
+
+  <script>
+    var editor = ace.edit("abc");
+    editor.setTheme("ace/theme/tomorrow");
+    editor.session.setMode("ace/mode/html");
+
+    window.$ = require("jquery");                 //引用jquery
+    const ipc = require("electron").ipcRenderer;
+    ipc.on("menu-openfile", function (ev,message) {         //自訂事件名稱menu-openfile
+      console.log("event received");
+      editor.setValue(message);
+    });
+
+  </script>
+
+</body>
+
+</html>
