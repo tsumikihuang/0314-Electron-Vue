@@ -55,3 +55,19 @@ app.on('activate', () => {
 
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and import them here.
+
+
+////////////////////////////////////////////////////////////////
+const {dialog}=require('electron');
+function selectFile(callback){
+  dialog.showOpenDialog(mainWindow,null,function(filePaths){
+    if(filePaths){
+      callback(filePaths[0]);
+    }
+  });
+}
+
+module.exports={selectFile};//在runtime時會變成map
+//同module.exports={"selectFile":selectFile};
+
+//let {selectFile}=require('index.js');

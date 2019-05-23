@@ -5,7 +5,26 @@
     <title></title>
   </head>
   <body>
+    <input type="text" id="file" readonly="readonly"/>
+    <button id="select">...</button>
+
+
     <script>
+      const path=require('path');
+      window.$=require('jquery');
+      const {remote,shell}=require("electron");
+      const {selectFile}=remote.require(__dirname,"./index.js");
+      $("#select").click(function(){
+        //檔案選取功能，必須在main proccess下執行，因此在index.js運作
+        //selectFile是在index.js宣告
+        selectFile(function(filePath){
+          $("#file").val(filePath);
+          shell.openItem(filePath);
+        });
+      });
+
+
+/*
       const {shell}=require('electron');  //include shell modual
       //同等於const shell=require('electron').shell;
       //把electron裡面的shell放到sell變數
@@ -18,8 +37,17 @@
       
       shell.openItem("C:\\sunny.docx");
 
+      shell.openExternal("http://www.yzu.edu.tw");
 
+      shell.openExternal("file://C:/sunny.docx");
 
+      shell.moveItemToTrash("C:\\sunny.docx");
+
+      //只能在windows上運行
+      shell.writeShortcutLink("C:\\Users\\user\\Desktop\\sunny.lnk",{
+        target:"C:\\sunny.docx"
+      });
+*/
     </script>
   </body>
 </html>
