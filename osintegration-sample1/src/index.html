@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+  </head>
+  <body>
+    <script>
+      const {shell}=require('electron');  //include shell modual
+      //同等於const shell=require('electron').shell;
+      //把electron裡面的shell放到sell變數
+
+      shell.beep();
+      
+      const path=require('path');//變數名可不一樣
+      shell.showItemInFolder(path.resolve("yarn.lock"));
+      //shell.showItemInFolder("C:\\Users");  //必須放完整路徑
+      
+      shell.openItem("C:\\sunny.docx");
+
+
+
+    </script>
+  </body>
+</html>
