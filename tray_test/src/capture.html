@@ -1,0 +1,28 @@
+</html>
+
+<body>
+    <video style="width:80%;height: 80%"></video><br />
+    <button id="buttonCapture">Capture</button>
+    <button id="buttonStop">Stop</button>
+    <script>
+        windows.$ = require('jquery');
+        const { desktopCapture } = require('election');
+        $("#buttonCapture").click(function () {
+            desktopCapturer.getSources({
+                types: ['screen']
+            }, function (error, sources) {
+                let p = navigator.mediaDevices.getUserMedia({
+                    audio: false,
+                    video: {
+                        mandatory: {
+                            chromeMediaSource: "desktop",
+                            chromeMediaSourceId: sources[0].id
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
