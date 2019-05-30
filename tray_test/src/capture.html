@@ -1,15 +1,15 @@
-</html>
+<html>
 
 <body>
-    <video style="width:80%;height: 80%"></video><br />
+    <video style="width:80%;height: 80%" id="v" autoplay="true"></video><br />
     <button id="buttonCapture">Capture</button>
     <button id="buttonStop">Stop</button>
     <script>
-        windows.$ = require('jquery');
-        const { desktopCapture } = require('election');
+        window.$ = require('jquery');
+        const { desktopCapturer } = require('electron');
         $("#buttonCapture").click(function () {
             desktopCapturer.getSources({
-                types: ['screen']
+                types: ['screen','window']
             }, function (error, sources) {
                 let p = navigator.mediaDevices.getUserMedia({
                     audio: false,
@@ -19,6 +19,9 @@
                             chromeMediaSourceId: sources[0].id
                         }
                     }
+                });
+                p.then(function (stream) {    //取得串流物件
+                    $("#v").get(0).srcObject = stream;
                 });
             });
         });
