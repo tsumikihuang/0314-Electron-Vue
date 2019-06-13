@@ -1,0 +1,7 @@
+yarn start	執行
+
+yarn build	打包專案，之後可放到伺服器上
+
+yarn test
+
+yarn eject	執行後就無法打包...因為會把各種package打開
